@@ -1,0 +1,35 @@
+@startuml img/sequence.png
+
+title タイマーツイートから通知が届くまでの各サービス間のシーケンス図
+
+actor user
+
+== 初期化 ==
+
+user -> twitter : 「@jiro_saburomaru timer 3m ラーメン」
+gas -> twitter : メンションリストの取得
+activate twitter
+twitter -> gas : メンション一覧の返却
+deactivate twitter
+gas -> gas : メンションリストのうち、\n@jiro_saburomaruから、\n且つ\dmのみにフィルタ
+gas -> gas : フィルタ済みツイートの\nつぶやき時刻の取得
+gas -> gas : 該当ツイートの時刻と\ngas側の時刻のdiffを取得
+gas -> gas : diffとツイートのタイマー時刻から、\nタイマー時刻を算出
+gas -> spreadsheet : タイマー時間を追加
+
+activate spreadsheet
+
+== 数分経過 ==
+
+gas -> spreadsheet : タイマー時間リストの取得
+spreadsheet -> gas : タイマー時間リストの返却
+gas -> gas : タイマー時間と\n現在時刻を比較し、超過判定
+gas -> twitter : 時間が超過しているため、\n時間になったことを告げる\nつぶやきを投げる
+activate twitter
+twitter -> user : 「ラーメンのお時間になりました。」
+twitter -> gas : 正常につぶやき完了\nレスポンスを返却
+deactivate twitter
+gas -> spreadsheet : タイマー行の削除
+deactivate spreadsheet
+
+@enduml

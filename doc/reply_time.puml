@@ -1,0 +1,19 @@
+@startuml img/reply_time.puml
+
+start
+
+:1分間隔で起動して関数を実行;
+:Spreadsheetからタイマー時間一覧の取得;
+:現在時刻を取得する;
+while (timerList.items)
+  :タイマー時間の取得;
+  if (現在時刻はタイマー時刻を超過しているか？) then (true)
+    :時刻になったことを\n告げるツイートをする;
+    :スプレッドシートの\n該当レコードを論理削除する;
+  endif
+endwhile
+
+end
+
+@enduml
+

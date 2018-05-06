@@ -1,0 +1,43 @@
+@startuml img/record_timer_tweet.png
+
+title タイマーツイートの記録関数の処理ロジック
+
+start
+
+:プロジェクトトリガーにより、\n1分間隔で関数が起動;
+:TwitterAPIでメンションリストの取得;
+
+:メンション元が自分のみのツイートのみにフィルタ;
+if (mentionList.length < 1) then (true)
+  end
+endif
+
+:ツイート内容が timer で\n始まるツイートのみにフィルタ;
+if (mentionList.length < 1) then (true)
+  end
+endif
+
+:ツイート内容が\ntimerの次に\d+(m|h) を持つツイートのみにフィルタ;
+if (mentionList.length < 1) then (true)
+  end
+endif
+
+:ツイート内容が\n\d+mの次に任意のテキストを持つ\nツイートのみにフィルタ;
+if (mentionList.length < 1) then (true)
+  end
+endif
+
+:loop mentionList.length;
+
+while (mentionList.items)
+  :正規表現で数値のみを抽出する\ntimer\s+(\d+)(m|h)\s;
+  :現在時刻を取得する;
+  :ツイートの時刻を取得する;
+  :ツイートの時刻と\n現在時刻のdiffを取得する;
+  :diffにtimerツイートから取得した時間を\n加算したタイマー時間を算出する;
+  :算出した時間をSpreadsheetに追加する;
+  :そのツイートを特定できるIDも記録する;
+endwhile
+
+end
+
