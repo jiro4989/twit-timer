@@ -1,4 +1,5 @@
 var MAX_RECORD_COUNT = PropertiesService.getScriptProperties().getProperty("MAX_RECORD_COUNT");
+var USER_NAME = PropertiesService.getScriptProperties().getProperty("USER_NAME");
 
 // recordTimer はタイマーツイートをスプレッドシートに記録します。
 function recordTimer() {
@@ -8,7 +9,7 @@ function recordTimer() {
   // 自分からのツイートのみ抽出
   mentionList = mentionList.filter(function(v) {
     var n = v.user.screen_name;
-    if (n == "jiro_saburomaru") return true;
+    if (n == USER_NAME) return true;
     else return false;
   });
   if (mentionList.length < 1) return;
@@ -74,7 +75,7 @@ function recordTimer() {
     sheet.getRange(emptyIndex+2, 8).setValue(false);
     sheet.getRange(emptyIndex+2, 9).setValue(message);
     
-    postTweet("@jiro_saburomaru [" + message + "]のタイマーをセットしました。\n設定時刻：" + formatTime(sendingTime));
+    postTweet("@" + USER_NAME + " [" + message + "]のタイマーをセットしました。\n設定時刻：" + formatTime(sendingTime));
     
     emptyIndex++;
     

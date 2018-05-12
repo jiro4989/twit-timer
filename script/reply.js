@@ -11,7 +11,7 @@ function reply() {
     if (diffTime <= 0) {
       var msg = item[8];
       Logger.log(msg);
-      postTweet("@jiro_saburomaru [" + msg + "]の時間になりました。");
+      postTweet("@" + USER_NAME + " [" + msg + "]の時間になりました。");
       var r = item[0] + 1;
       sheet.getRange(r, 8).setValue(true);
     }

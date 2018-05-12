@@ -33,4 +33,5 @@ twit-timer
 | TWITTER_API_KEY    | Twitterアプリ登録で取得したAPIキー         |
 | TWITTER_API_SECRET | Twitterアプリ登録で取得したAPIシークレット |
 | MAX_RECORD_COUNT   | 64                                         |
+| USER_NAME          | ツイッターのユーザ名(@hogehoge)            |
 
